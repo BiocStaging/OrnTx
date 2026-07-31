@@ -21,6 +21,7 @@
 #' @name rosa_annotation
 #' @keywords datasets
 #' @usage data(rosa_annotation)
+#' @return NULL
 NULL
 
 #' Rosa chinensis Example Expression Dataset
@@ -41,5 +42,6 @@ NULL
 #' @name rosa_example
 #' @keywords datasets
 #' @usage data(rosa_example)
+#' @return NULL
 NULL
 

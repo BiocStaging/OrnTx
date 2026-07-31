@@ -223,7 +223,7 @@ importCustomAtlas <- function(counts_dir,
   names(count_list) <- names(count_files)
 
   # Remove failed files
-  failed <- sapply(count_list, is.null)
+  failed <- vapply(count_list, is.null, logical(1))
   if (any(failed)) {
     message("[OrnAtlas] Warning: ", sum(failed),
             " files failed to read and were excluded.")
