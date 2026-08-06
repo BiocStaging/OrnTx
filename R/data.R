@@ -45,3 +45,32 @@ NULL
 #' @return NULL
 NULL
 
+#' Floriculture Trait Gene Database
+#'
+#' @description
+#' A curated database of 64 genes associated with economically
+#' important floriculture traits, anchored to Arabidopsis thaliana
+#' gene IDs to enable cross-species queries regardless of annotation
+#' quality. Covers flower color, floral scent, senescence/vase life,
+#' floral development, and transcriptional regulation.
+#'
+#' @format A data frame with 64 rows and 9 variables:
+#' \describe{
+#'   \item{gene_symbol}{Gene symbol (e.g., "CHS", "DFR", "FT")}
+#'   \item{arabidopsis_id}{Arabidopsis thaliana AGI locus ID}
+#'   \item{trait}{Specific trait subcategory}
+#'   \item{trait_category}{Broad trait category}
+#'   \item{pathway}{Biochemical pathway name}
+#'   \item{rose_evidence}{Evidence level in Rosa chinensis}
+#'   \item{marigold_evidence}{Evidence level in Tagetes erecta}
+#'   \item{key_pmid}{Key PubMed reference ID}
+#' }
+#'
+#' @source Literature-curated from published floriculture
+#'   transcriptomics studies. See key_pmid column for references.
+#'
+#' @name floriculture_traits
+#' @keywords datasets
+#' @usage data(floriculture_traits)
+#' @return NULL
+NULL
