@@ -154,6 +154,9 @@ plotVolcano(results,
             top_n = 20)
 ```
 
+lines <- readLines("vignettes/OrnAtlas_workflow.Rmd")
+
+# Find line number of section 7
 ## Annotate DE results
 
 ```{r annotate, eval=FALSE}
@@ -172,6 +175,35 @@ head(top_genes[, c("gene_id", "locus_name",
 
 The key innovation of OrnAtlas is `importCustomAtlas()` which works
 for **any plant species** with STAR-aligned RNA-seq data.
+
+
+## Trait gene analysis
+
+OrnAtlas includes a curated database of 64 floriculture trait genes
+anchored to Arabidopsis thaliana orthologs, enabling cross-species
+trait queries regardless of genome annotation quality.
+
+```{r trait-genes, eval=FALSE}
+# Get all flower color genes
+color_genes <- getFlowerGenes(trait = 'flower_color')
+nrow(color_genes)
+
+# Get scent genes with strong evidence in Rosa chinensis
+rose_scent <- getFlowerGenes(
+  trait    = 'scent',
+  species  = 'Rosa chinensis',
+  evidence = 'Strong'
+)
+
+# Find orthologs for known genes
+findOrthologs(c('CHS', 'DFR', 'ANS', 'PAL1', 'ACO1'),
+              id_type = 'symbol')
+
+# Standardize developmental stage names across studies
+raw_stages <- c('bud', 'Bud', 'floral bud', 'Stage 1',
+                'open flower', 'OF', 'full bloom', 'senescent')
+standardizeStage(raw_stages)
+```
 
 ## Example: Tagetes erecta (Marigold)
 

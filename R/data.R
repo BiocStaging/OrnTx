@@ -74,3 +74,27 @@ NULL
 #' @usage data(floriculture_traits)
 #' @return NULL
 NULL
+
+#' Marigold Carotenoid Gene Mapping
+#'
+#' @description
+#' A curated mapping of Tagetes erecta gene IDs to carotenoid
+#' biosynthesis gene symbols and Arabidopsis orthologs. Based on
+#' differential expression analysis between orange (V-01) and
+#' yellow (V-01M) flower color genotypes.
+#'
+#' @format A data frame with 4 rows and 3 variables:
+#' \describe{
+#'   \item{gene_id}{Tagetes erecta gene ID (QVD17 format)}
+#'   \item{gene_symbol}{Carotenoid gene symbol (CCS, BCH, LCYe, PSY)}
+#'   \item{arabidopsis_id}{Arabidopsis thaliana ortholog AGI ID}
+#' }
+#'
+#' @source Differential expression analysis of NCBI BioProject
+#'   PRJNA562616 using OrnAtlas runDE().
+#'
+#' @name marigold_carotenoid_genes
+#' @keywords datasets
+#' @usage data(marigold_carotenoid_genes)
+#' @return NULL
+NULL
