@@ -7,21 +7,19 @@
 normalizeCounts(se, method = c("CPM", "TMM", "DESeq2_vst"), design = ~1)
 }
 \arguments{
-\item{se}{A SummarizedExperiment object}
+\item{se}{A SummarizedExperiment object.}
 
-\item{method}{Normalization method: "CPM", "TMM", or "DESeq2_vst"}
+\item{method}{One of "CPM", "TMM", or "DESeq2_vst".}
 
-\item{design}{Optional formula for DESeq2 methods}
+\item{design}{Optional formula for DESeq2 methods.}
 }
 \value{
-SummarizedExperiment with normalized assay added
+SummarizedExperiment with normalized assay added.
 }
 \description{
 Normalize count data
 }
 \examples{
-\donttest{
 data(rosa_example)
 se_norm <- normalizeCounts(rosa_example, method = "CPM")
-}
 }

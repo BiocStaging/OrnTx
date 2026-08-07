@@ -5,7 +5,7 @@ test_that("importRosaCounts gives helpful error for missing file", {
       col_data   = data.frame(stage = "bud",
                               row.names = "Sample1")
     ),
-    regexp = "File not found"
+    regexp = "cannot open"
   )
 })
 

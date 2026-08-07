@@ -8,21 +8,21 @@ importRosaCounts(file_paths, col_data, strandedness = "reverse")
 }
 \arguments{
 \item{file_paths}{Named character vector of paths to
-ReadsPerGene.out.tab files. Names become sample IDs.}
+ReadsPerGene.out.tab files.}
 
 \item{col_data}{A data.frame with sample metadata.}
 
-\item{strandedness}{One of "reverse", "forward", "unstranded"}
+\item{strandedness}{One of "reverse", "forward", "unstranded".}
 }
 \value{
-A SummarizedExperiment object
+A SummarizedExperiment object.
 }
 \description{
 Import STAR count files into OrnAtlas
 }
 \examples{
 \dontrun{
-files <- c(Stage1 = "path/to/sample1/ReadsPerGene.out.tab")
+files <- c(Sample1 = "path/to/sample1/ReadsPerGene.out.tab")
 importRosaCounts(files, col_data = metadata)
 }
 }

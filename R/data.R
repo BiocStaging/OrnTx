@@ -98,3 +98,27 @@ NULL
 #' @usage data(marigold_carotenoid_genes)
 #' @return NULL
 NULL
+
+#' Rosa chinensis NCBI Functional Annotation
+#'
+#' @description
+#' Functional annotation for 30,924 Rosa chinensis genes from
+#' the NCBI RefSeq annotation of the RchiOBHm-V2 reference genome
+#' (GCF_002994745.2). Contains gene product descriptions extracted
+#' from the genomic GTF file. Gene IDs use NCBI LOC format
+#' (e.g., LOC112190511).
+#'
+#' @format A data frame with 30,924 rows and 2 variables:
+#' \describe{
+#'   \item{ncbi_gene_id}{NCBI gene identifier (LOC format)}
+#'   \item{product}{Gene product description from NCBI annotation}
+#' }
+#'
+#' @source NCBI RefSeq GCF_002994745.2 (RchiOBHm-V2) GTF annotation.
+#'   \url{https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_002994745.2/}
+#'
+#' @name rose_ncbi_annotation
+#' @keywords datasets
+#' @usage data(rose_ncbi_annotation)
+#' @return NULL
+NULL
