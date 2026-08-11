@@ -2,6 +2,7 @@
 
 export(annotateDEResults)
 export(annotateGenes)
+export(annotateWithNCBI)
 export(annotateWithTraits)
 export(buildAtlas)
 export(buildRosaAtlas)

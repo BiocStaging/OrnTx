@@ -115,3 +115,42 @@ getRosaAnnotation <- function() {
   utils::data("rosa_annotation", package = "OrnAtlas", envir = ann_env)
   ann_env$rosa_annotation
 }
+
+#' Annotate gene IDs using NCBI functional annotation
+#'
+#' @description
+#' Adds functional product descriptions to DE results when gene IDs
+#' are in NCBI LOC format (e.g., LOC112190511). This complements
+#' annotateGenes() which works with RchiOBHm locus names.
+#'
+#' @param de_results A data.frame with a gene_id column containing
+#'   NCBI LOC gene identifiers.
+#'
+#' @return The input data.frame with product column added.
+#' @export
+#' @name annotateWithNCBI
+#'
+#' @examples
+#' \donttest{
+#' data(rosa_ncbi_annotation)
+#' de <- data.frame(gene_id = rose_ncbi_annotation$ncbi_gene_id[1:5],
+#'                  log2FoldChange = rnorm(5))
+#' annotateWithNCBI(de)
+#' }
+annotateWithNCBI <- function(de_results) {
+  ann_env <- new.env()
+  utils::data("rose_ncbi_annotation", package = "OrnAtlas",
+              envir = ann_env)
+  ann <- ann_env$rose_ncbi_annotation
+
+  merged <- merge(de_results,
+                  ann,
+                  by.x = "gene_id",
+                  by.y = "ncbi_gene_id",
+                  all.x = TRUE)
+
+  n_ann <- sum(!is.na(merged$product))
+  message("[OrnAtlas] Annotated ", n_ann, " of ",
+          nrow(de_results), " genes with NCBI product names")
+  merged
+}
