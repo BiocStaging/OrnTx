@@ -16,7 +16,7 @@ utils::globalVariables(c("floriculture_traits"))
 #' head(color_genes)
 getFlowerGenes <- function(trait="all", species="all", evidence="all") {
   db_env <- new.env()
-  utils::data("floriculture_traits", package="OrnAtlas", envir=db_env)
+  utils::data("floriculture_traits", package="OrnTx", envir=db_env)
   db <- db_env$floriculture_traits
   if (!identical(trait, "all"))
     db <- db[grepl(paste(trait, collapse="|"), db$trait,
@@ -27,7 +27,7 @@ getFlowerGenes <- function(trait="all", species="all", evidence="all") {
     else if (grepl("tagetes|marigold", species, ignore.case=TRUE))
       db <- db[db$marigold_evidence %in% evidence, ]
   }
-  message("[OrnAtlas] Trait genes retrieved: ", nrow(db))
+  message("[OrnTx] Trait genes retrieved: ", nrow(db))
   db
 }
 
@@ -46,11 +46,11 @@ findOrthologs <- function(gene_ids, id_type=c("symbol","arabidopsis"),
                            species="any") {
   id_type <- match.arg(id_type)
   db_env  <- new.env()
-  utils::data("floriculture_traits", package="OrnAtlas", envir=db_env)
+  utils::data("floriculture_traits", package="OrnTx", envir=db_env)
   db <- db_env$floriculture_traits
   matched <- if (id_type == "symbol") db[db$gene_symbol %in% gene_ids, ]
              else db[db$arabidopsis_id %in% gene_ids, ]
-  message("[OrnAtlas] Queried: ", length(gene_ids),
+  message("[OrnTx] Queried: ", length(gene_ids),
           " | Matched: ", nrow(matched))
   matched
 }
@@ -133,8 +133,8 @@ annotateWithTraits <- function(de_results,
   n_trait     <- sum(de_results$is_trait_gene, na.rm=TRUE)
   n_sig_trait <- sum(de_results$is_trait_gene &
                      de_results$significant, na.rm=TRUE)
-  message("[OrnAtlas] Trait genes: ", n_trait)
-  message("[OrnAtlas] Significant trait genes: ", n_sig_trait)
+  message("[OrnTx] Trait genes: ", n_trait)
+  message("[OrnTx] Significant trait genes: ", n_sig_trait)
   de_results
 }
 summarizeTraitExpression <- function(se, trait="flower_color_anthocyanin",
@@ -145,11 +145,11 @@ summarizeTraitExpression <- function(se, trait="flower_color_anthocyanin",
     rownames(expr_mat) %in% trait_db$gene_symbol |
     rownames(expr_mat) %in% trait_db$arabidopsis_id]
   if (length(matched) == 0) {
-    message("[OrnAtlas] No trait genes found. Use annotateWithTraits()",
+    message("[OrnTx] No trait genes found. Use annotateWithTraits()",
             " on DE results instead.")
     return(invisible(NULL))
   }
-  message("[OrnAtlas] Trait genes found: ", length(matched))
+  message("[OrnTx] Trait genes found: ", length(matched))
   as.data.frame(expr_mat[matched, , drop=FALSE])
 }
 
@@ -211,7 +211,7 @@ standardizeStage <- function(stage_vector) {
   }
 
   n_standardized <- sum(result != stage_vector, na.rm = TRUE)
-  message("[OrnAtlas] Standardized ", n_standardized,
+  message("[OrnTx] Standardized ", n_standardized,
           " of ", length(stage_vector), " stage names")
 
   result

@@ -99,7 +99,7 @@ plotPCA <- function(se,
   p
 }
 
-#' OrnAtlas ggplot2 theme
+#' OrnTx ggplot2 theme
 #'
 #' @param base_size Base font size
 #' @return A ggplot2 theme

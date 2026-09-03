@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(OrnAtlas)
+library(OrnTx)
 
-test_check("OrnAtlas")
+test_check("OrnTx")

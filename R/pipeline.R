@@ -13,7 +13,7 @@ checkTools <- function() {
       error=function(e) NULL, warning=function(w) NULL)
     !is.null(ret)
   }, logical(1))
-  cat("\n=== OrnAtlas Tool Check ===\n")
+  cat("\n=== OrnTx Tool Check ===\n")
   for (i in seq_along(available)) {
     status <- if (available[i]) "FOUND" else "NOT FOUND"
     cat(sprintf("  %-20s %s\n", names(available)[i], status))
@@ -50,10 +50,10 @@ downloadSRA <- function(accessions, output_dir="raw_reads",
                          method=c("aws","fasterq-dump")) {
   method <- match.arg(method)
   dir.create(output_dir, showWarnings=FALSE, recursive=TRUE)
-  message("[OrnAtlas] Downloading ", length(accessions), " accessions...")
+  message("[OrnTx] Downloading ", length(accessions), " accessions...")
   downloaded <- character(0)
   for (srr in accessions) {
-    message("[OrnAtlas] Downloading: ", srr)
+    message("[OrnTx] Downloading: ", srr)
     if (method == "aws") {
       url <- paste0(
         "https://sra-pub-run-odp.s3.amazonaws.com/sra/", srr, "/", srr)
@@ -70,7 +70,7 @@ downloadSRA <- function(accessions, output_dir="raw_reads",
           for (f in fq) system2("gzip", f)
           downloaded <- c(downloaded, paste0(fq, ".gz"))
         }
-        message("[OrnAtlas] ", srr, " done!")
+        message("[OrnTx] ", srr, " done!")
       }, error=function(e) warning("Failed: ", srr, " - ", e$message))
     } else {
       args <- c("--split-files", "--outdir", output_dir,
@@ -87,11 +87,11 @@ downloadSRA <- function(accessions, output_dir="raw_reads",
                          list.files(output_dir,
                                     pattern=paste0(srr, ".*[.]fastq"),
                                     full.names=TRUE))
-        message("[OrnAtlas] ", srr, " done!")
+        message("[OrnTx] ", srr, " done!")
       }
     }
   }
-  message("[OrnAtlas] Downloaded ", length(downloaded), " files")
+  message("[OrnTx] Downloaded ", length(downloaded), " files")
   invisible(downloaded)
 }
 
@@ -128,13 +128,13 @@ runQC <- function(input_dir, output_dir="clean_reads",
       pattern="[.]fastq[.]gz$", full.names=TRUE)
     samples <- gsub("[.]fastq[.]gz$", "", basename(r1_files))
   }
-  message("[OrnAtlas] Running QC on ", length(samples), " samples...")
+  message("[OrnTx] Running QC on ", length(samples), " samples...")
   cleaned <- character(0)
   for (i in seq_along(samples)) {
     s    <- samples[i]
     r1   <- r1_files[i]
     out1 <- file.path(output_dir, paste0(s, "_1_clean.fastq.gz"))
-    message("[OrnAtlas] QC: ", s)
+    message("[OrnTx] QC: ", s)
     if (paired) {
       r2   <- gsub("_1[.]fastq[.]gz$|_R1[.]fastq[.]gz$",
                    "_2.fastq.gz", r1)
@@ -158,11 +158,11 @@ runQC <- function(input_dir, output_dir="clean_reads",
     }
     ret <- system2("fastp", args)
     if (ret == 0) {
-      message("[OrnAtlas] ", s, " QC complete!")
+      message("[OrnTx] ", s, " QC complete!")
       cleaned <- c(cleaned, out1)
-    } else warning("[OrnAtlas] fastp failed for: ", s)
+    } else warning("[OrnTx] fastp failed for: ", s)
   }
-  message("[OrnAtlas] QC complete: ", length(cleaned), " samples")
+  message("[OrnTx] QC complete: ", length(cleaned), " samples")
   invisible(cleaned)
 }
 
@@ -196,9 +196,9 @@ buildGenomeIndex <- function(genome_fasta, gtf_file,
   if (!file.exists(gtf_file))
     stop("GTF not found: ", gtf_file)
   dir.create(index_dir, showWarnings=FALSE, recursive=TRUE)
-  message("[OrnAtlas] Building STAR genome index...")
-  message("[OrnAtlas] Genome: ", basename(genome_fasta))
-  message("[OrnAtlas] This may take 20-40 minutes...")
+  message("[OrnTx] Building STAR genome index...")
+  message("[OrnTx] Genome: ", basename(genome_fasta))
+  message("[OrnTx] This may take 20-40 minutes...")
   args <- c("--runMode", "genomeGenerate",
             "--genomeDir", index_dir,
             "--genomeFastaFiles", genome_fasta,
@@ -209,9 +209,9 @@ buildGenomeIndex <- function(genome_fasta, gtf_file,
             as.character(as.integer(ram_gb * 1e9)))
   ret <- system2("STAR", args)
   if (ret == 0) {
-    message("[OrnAtlas] Genome index built successfully!")
+    message("[OrnTx] Genome index built successfully!")
   } else {
-    stop("[OrnAtlas] STAR indexing failed. Check installation and RAM.")
+    stop("[OrnTx] STAR indexing failed. Check installation and RAM.")
   }
   invisible(index_dir)
 }
@@ -255,7 +255,7 @@ alignReads <- function(fastq_dir, index_dir,
       pattern="_clean[.]fastq[.]gz$", full.names=TRUE)
     samples <- gsub("_clean[.]fastq[.]gz$", "", basename(r1_files))
   }
-  message("[OrnAtlas] Aligning ", length(samples), " samples...")
+  message("[OrnTx] Aligning ", length(samples), " samples...")
   count_files <- character(0)
   for (i in seq_along(samples)) {
     s    <- samples[i]
@@ -264,11 +264,11 @@ alignReads <- function(fastq_dir, index_dir,
     dir.create(sdir, showWarnings=FALSE)
     count_file <- file.path(sdir, "ReadsPerGene.out.tab")
     if (file.exists(count_file)) {
-      message("[OrnAtlas] ", s, " already aligned, skipping.")
+      message("[OrnTx] ", s, " already aligned, skipping.")
       count_files <- c(count_files, count_file)
       next
     }
-    message("[OrnAtlas] Aligning: ", s)
+    message("[OrnTx] Aligning: ", s)
     reads_in <- if (paired) {
       r2 <- gsub("_1_clean[.]fastq[.]gz$|_R1_clean[.]fastq[.]gz$",
                  "_2_clean.fastq.gz", r1)
@@ -285,18 +285,18 @@ alignReads <- function(fastq_dir, index_dir,
               as.character(as.integer(ram_gb * 1e9)))
     ret <- system2("STAR", args)
     if (ret == 0) {
-      message("[OrnAtlas] ", s, " aligned!")
+      message("[OrnTx] ", s, " aligned!")
       count_files <- c(count_files, count_file)
-    } else warning("[OrnAtlas] STAR failed for: ", s)
+    } else warning("[OrnTx] STAR failed for: ", s)
   }
-  message("[OrnAtlas] Alignment complete: ",
+  message("[OrnTx] Alignment complete: ",
           length(count_files), " count files")
   invisible(count_files)
 }
 
 
 #' Run complete RNA-seq pipeline from FASTQ to SummarizedExperiment
-#' @description Convenience wrapper running the complete OrnAtlas
+#' @description Convenience wrapper running the complete OrnTx
 #'   pipeline: QC (fastp) -> Alignment (STAR) -> Import -> Normalize.
 #'   For SRA download first, use downloadSRA() separately.
 #'   Requires fastp and STAR installed (Linux/macOS/HPC only).
@@ -338,7 +338,7 @@ runFullPipeline <- function(fastq_dir,
                              skip_qc       = FALSE,
                              skip_index    = FALSE) {
   message("\n========================================")
-  message("  OrnAtlas Full Pipeline")
+  message("  OrnTx Full Pipeline")
   message("  Species: ", species)
   message("========================================\n")
   tools <- checkTools()

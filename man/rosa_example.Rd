@@ -17,7 +17,7 @@ NCBI SRA BioProjects PRJNA562083 and PRJNA594099
 data(rosa_example)
 }
 \description{
-A small subset of the OrnAtlas Rosa chinensis expression atlas
+A small subset of the OrnTx Rosa chinensis expression atlas
 for use in package examples and testing. Contains 500 highly
 variable genes across 6 samples: 3 petal and 3 abscission zone.
 }

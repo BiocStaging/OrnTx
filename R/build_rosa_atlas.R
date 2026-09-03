@@ -22,10 +22,10 @@ buildRosaAtlas <- function(counts_dir,
                            strandedness = "reverse",
                            min_samples  = 10) {
 
-  message("[OrnAtlas] Building Rosa chinensis expression atlas...")
+  message("[OrnTx] Building Rosa chinensis expression atlas...")
 
   # Step 1: Read metadata
-  message("[OrnAtlas] Reading sample metadata...")
+  message("[OrnTx] Reading sample metadata...")
   meta <- utils::read.csv(metadata_file,
                           stringsAsFactors = FALSE,
                           check.names      = FALSE)
@@ -39,7 +39,7 @@ buildRosaAtlas <- function(counts_dir,
   rownames(meta_sub) <- meta_sub$Run
 
   # Step 2: Find count files
-  message("[OrnAtlas] Scanning count files...")
+  message("[OrnTx] Scanning count files...")
   count_files <- list.files(counts_dir,
                             pattern    = "_ReadsPerGene.out.tab",
                             full.names = TRUE)
@@ -49,7 +49,7 @@ buildRosaAtlas <- function(counts_dir,
 
   # Match with metadata
   common_srr  <- intersect(srr_ids, rownames(meta_sub))
-  message("[OrnAtlas] Samples with counts + metadata: ",
+  message("[OrnTx] Samples with counts + metadata: ",
           length(common_srr))
 
   count_files <- count_files[common_srr]
@@ -63,7 +63,7 @@ buildRosaAtlas <- function(counts_dir,
   )
 
   # Step 4: Read all count files
-  message("[OrnAtlas] Reading ", length(count_files),
+  message("[OrnTx] Reading ", length(count_files),
           " count files...")
   count_list <- lapply(seq_along(count_files), function(i) {
     fp  <- count_files[i]
@@ -77,9 +77,9 @@ buildRosaAtlas <- function(counts_dir,
   names(count_list) <- names(count_files)
 
   # Step 5: Build count matrix
-  message("[OrnAtlas] Building count matrix...")
+  message("[OrnTx] Building count matrix...")
   common_genes <- Reduce(intersect, lapply(count_list, names))
-  message("[OrnAtlas] Common genes: ", length(common_genes))
+  message("[OrnTx] Common genes: ", length(common_genes))
 
   count_mat <- do.call(cbind,
                        lapply(count_list, function(x) x[common_genes]))
@@ -88,7 +88,7 @@ buildRosaAtlas <- function(counts_dir,
   # Step 6: Filter lowly expressed genes
   keep      <- rowSums(count_mat >= 5) >= min_samples
   count_mat <- count_mat[keep, , drop = FALSE]
-  message("[OrnAtlas] Genes after filtering: ", nrow(count_mat))
+  message("[OrnTx] Genes after filtering: ", nrow(count_mat))
 
   # Step 7: Clean tissue metadata
   meta_final$tissue_clean <- tolower(trimws(meta_final$tissue))
@@ -106,10 +106,10 @@ buildRosaAtlas <- function(counts_dir,
     colData = S4Vectors::DataFrame(meta_final)
   )
 
-  message("[OrnAtlas] Atlas complete: ",
+  message("[OrnTx] Atlas complete: ",
           nrow(se), " genes x ",
           ncol(se), " samples")
-  message("[OrnAtlas] Tissues found: ",
+  message("[OrnTx] Tissues found: ",
           paste(unique(meta_final$tissue_clean)[1:5],
                 collapse = ", "), "...")
   se

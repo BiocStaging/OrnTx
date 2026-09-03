@@ -45,7 +45,7 @@ runFullPipeline(
 A CPM-normalized SummarizedExperiment.
 }
 \description{
-Convenience wrapper running the complete OrnAtlas
+Convenience wrapper running the complete OrnTx
 pipeline: QC (fastp) -> Alignment (STAR) -> Import -> Normalize.
 For SRA download first, use downloadSRA() separately.
 Requires fastp and STAR installed (Linux/macOS/HPC only).

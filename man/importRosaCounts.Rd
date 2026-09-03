@@ -2,7 +2,7 @@
 % Please edit documentation in R/import.R
 \name{importRosaCounts}
 \alias{importRosaCounts}
-\title{Import STAR count files into OrnAtlas}
+\title{Import STAR count files into OrnTx}
 \usage{
 importRosaCounts(file_paths, col_data, strandedness = "reverse")
 }
@@ -18,7 +18,7 @@ ReadsPerGene.out.tab files.}
 A SummarizedExperiment object.
 }
 \description{
-Import STAR count files into OrnAtlas
+Import STAR count files into OrnTx
 }
 \examples{
 \dontrun{

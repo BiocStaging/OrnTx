@@ -2,7 +2,7 @@
 % Please edit documentation in R/visualize.R
 \name{ornTheme}
 \alias{ornTheme}
-\title{OrnAtlas ggplot2 theme}
+\title{OrnTx ggplot2 theme}
 \usage{
 ornTheme(base_size = 12)
 }
@@ -13,5 +13,5 @@ ornTheme(base_size = 12)
 A ggplot2 theme
 }
 \description{
-OrnAtlas ggplot2 theme
+OrnTx ggplot2 theme
 }

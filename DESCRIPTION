@@ -1,9 +1,9 @@
-Package: OrnAtlas
+Package: OrnTx
 Title: Expression Atlas for Ornamental Plant Transcriptomics
 Version: 0.1.0
 Authors@R: c(
     person("Lashika", "Meena",
-           email = "your.email@gmail.com",
+           email = "lashikakarnal@gmail.com",
            role = c("aut", "cre"),
            comment = c(ORCID = "0000-0000-0000-0000")))
 Description: A species-aware expression atlas tool for ornamental and
@@ -13,8 +13,8 @@ Description: A species-aware expression atlas tool for ornamental and
     visualization. Includes native support for Rosa chinensis and
     Chrysanthemum morifolium.
 License: GPL-3
-URL: https://github.com/lashikakarnal/OrnAtlas
-BugReports: https://github.com/lashikakarnal/OrnAtlas/issues
+URL: https://github.com/lashikakarnal/OrnTx
+BugReports: https://github.com/lashikakarnal/OrnTx/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3

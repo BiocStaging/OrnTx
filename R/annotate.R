@@ -26,7 +26,7 @@ annotateGenes <- function(gene_ids,
                           species = "Rosa chinensis") {
 
   if (species != "Rosa chinensis") {
-    message("[OrnAtlas] Note: built-in annotation only available ",
+    message("[OrnTx] Note: built-in annotation only available ",
             "for Rosa chinensis. Returning gene_ids only.")
     return(data.frame(gene_id      = gene_ids,
                       locus_name   = NA_character_,
@@ -35,7 +35,7 @@ annotateGenes <- function(gene_ids,
 
   # Load built-in annotation
   ann_env <- new.env()
-  utils::data("rosa_annotation", package = "OrnAtlas",
+  utils::data("rosa_annotation", package = "OrnTx",
        envir = ann_env)
   ann <- ann_env$rosa_annotation
 
@@ -53,7 +53,7 @@ annotateGenes <- function(gene_ids,
   rownames(merged) <- NULL
 
   n_annotated <- sum(!is.na(merged$locus_name))
-  message("[OrnAtlas] Annotated ", n_annotated, " of ",
+  message("[OrnTx] Annotated ", n_annotated, " of ",
           length(gene_ids), " genes")
   merged
 }
@@ -86,7 +86,7 @@ annotateDEResults <- function(de_results,
 
   if (!"gene_id" %in% names(de_results))
     stop("de_results must have a 'gene_id' column. ",
-         "Make sure you used runDE() from OrnAtlas.")
+         "Make sure you used runDE() from OrnTx.")
 
   gene_ann <- annotateGenes(de_results$gene_id, species = species)
 
@@ -112,7 +112,7 @@ annotateDEResults <- function(de_results,
 #' nrow(ann)
 getRosaAnnotation <- function() {
   ann_env <- new.env()
-  utils::data("rosa_annotation", package = "OrnAtlas", envir = ann_env)
+  utils::data("rosa_annotation", package = "OrnTx", envir = ann_env)
   ann_env$rosa_annotation
 }
 
@@ -139,7 +139,7 @@ getRosaAnnotation <- function() {
 #' }
 annotateWithNCBI <- function(de_results) {
   ann_env <- new.env()
-  utils::data("rose_ncbi_annotation", package = "OrnAtlas",
+  utils::data("rose_ncbi_annotation", package = "OrnTx",
               envir = ann_env)
   ann <- ann_env$rose_ncbi_annotation
 
@@ -150,7 +150,7 @@ annotateWithNCBI <- function(de_results) {
                   all.x = TRUE)
 
   n_ann <- sum(!is.na(merged$product))
-  message("[OrnAtlas] Annotated ", n_ann, " of ",
+  message("[OrnTx] Annotated ", n_ann, " of ",
           nrow(de_results), " genes with NCBI product names")
   merged
 }

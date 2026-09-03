@@ -26,13 +26,13 @@ runDE <- function(se,
   if (!requireNamespace("DESeq2", quietly = TRUE))
     stop("Install DESeq2: BiocManager::install('DESeq2')")
 
-  message("[OrnAtlas] Running DESeq2 | design: ", deparse(design))
+  message("[OrnTx] Running DESeq2 | design: ", deparse(design))
 
   # Build DESeq2 object
   dds  <- DESeq2::DESeqDataSet(se, design = design)
   keep <- rowSums(DESeq2::counts(dds) >= 10) >= 3
   dds  <- dds[keep, ]
-  message("[OrnAtlas] Genes after filtering: ", nrow(dds))
+  message("[OrnTx] Genes after filtering: ", nrow(dds))
 
   # Run DESeq2
   dds <- DESeq2::DESeq(dds, quiet = TRUE)
@@ -55,7 +55,7 @@ runDE <- function(se,
 
   n_up   <- sum(res_df$direction == "Up",   na.rm = TRUE)
   n_down <- sum(res_df$direction == "Down", na.rm = TRUE)
-  message("[OrnAtlas] Up: ", n_up, " | Down: ", n_down,
+  message("[OrnTx] Up: ", n_up, " | Down: ", n_down,
           " | Total sig: ", n_up + n_down)
 
   res_df[order(res_df$padj, na.last = TRUE), ]

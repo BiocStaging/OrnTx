@@ -27,7 +27,7 @@ NULL
 #' Rosa chinensis Example Expression Dataset
 #'
 #' @description
-#' A small subset of the OrnAtlas Rosa chinensis expression atlas
+#' A small subset of the OrnTx Rosa chinensis expression atlas
 #' for use in package examples and testing. Contains 500 highly
 #' variable genes across 6 samples: 3 petal and 3 abscission zone.
 #'
@@ -91,7 +91,7 @@ NULL
 #' }
 #'
 #' @source Differential expression analysis of NCBI BioProject
-#'   PRJNA562616 using OrnAtlas runDE().
+#'   PRJNA562616 using OrnTx runDE().
 #'
 #' @name marigold_carotenoid_genes
 #' @keywords datasets

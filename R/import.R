@@ -1,5 +1,5 @@
 
-#' Import STAR count files into OrnAtlas
+#' Import STAR count files into OrnTx
 #'
 #' @param file_paths Named character vector of paths to
 #'   ReadsPerGene.out.tab files.
@@ -80,7 +80,7 @@ normalizeCounts <- function(se,
     }
   )
   SummarizedExperiment::assay(se, method) <- norm_mat
-  message("[OrnAtlas] Normalization complete: assay '",
+  message("[OrnTx] Normalization complete: assay '",
           method, "' added.")
   se
 }
@@ -124,7 +124,7 @@ importCountMatrix <- function(counts,
                                min_count   = 5L,
                                min_samples = 3L) {
 
-  message("[OrnAtlas] Importing count data for: ", species)
+  message("[OrnTx] Importing count data for: ", species)
 
   # Read counts from file or use matrix directly
   if (is.character(counts) && length(counts) == 1) {
@@ -136,7 +136,7 @@ importCountMatrix <- function(counts,
       file_format <-
         if (grepl("Geneid.*Chr.*Start", first_line)) "featureCounts"
         else "matrix"
-      message("[OrnAtlas] Auto-detected format: ", file_format)
+      message("[OrnTx] Auto-detected format: ", file_format)
     }
 
     count_mat <- switch(file_format,
@@ -191,7 +191,7 @@ importCountMatrix <- function(counts,
     )
   } else if (is.matrix(counts) || is.data.frame(counts)) {
     count_mat <- as.matrix(counts)
-    message("[OrnAtlas] Using pre-loaded count matrix: ",
+    message("[OrnTx] Using pre-loaded count matrix: ",
             nrow(count_mat), " genes x ",
             ncol(count_mat), " samples")
   } else {
@@ -218,7 +218,7 @@ importCountMatrix <- function(counts,
     found <- candidates[candidates %in% names(meta)]
     if (length(found) > 0) {
       sample_col <- found[1]
-      message("[OrnAtlas] Sample ID column: ", sample_col)
+      message("[OrnTx] Sample ID column: ", sample_col)
     }
   }
   if (!is.null(sample_col) && sample_col %in% names(meta))
@@ -230,12 +230,12 @@ importCountMatrix <- function(counts,
     stop("No matching samples between counts and metadata.")
   count_mat <- count_mat[, common, drop = FALSE]
   meta      <- meta[common, , drop = FALSE]
-  message("[OrnAtlas] Matched samples: ", length(common))
+  message("[OrnTx] Matched samples: ", length(common))
 
   # Filter
   keep      <- rowSums(count_mat >= min_count) >= min_samples
   count_mat <- count_mat[keep, , drop = FALSE]
-  message("[OrnAtlas] Genes after filtering: ", nrow(count_mat))
+  message("[OrnTx] Genes after filtering: ", nrow(count_mat))
 
   # Build SummarizedExperiment
   se <- SummarizedExperiment::SummarizedExperiment(
@@ -247,15 +247,15 @@ importCountMatrix <- function(counts,
       n_genes     = nrow(count_mat),
       n_samples   = ncol(count_mat),
       import_date = Sys.Date(),
-      ornAtlas_version = utils::packageVersion("OrnAtlas")
+      ornAtlas_version = utils::packageVersion("OrnTx")
     )
   )
 
-  message("[OrnAtlas] Import complete!")
-  message("[OrnAtlas] Species:  ", species)
-  message("[OrnAtlas] Genes:    ", nrow(se))
-  message("[OrnAtlas] Samples:  ", ncol(se))
-  message("[OrnAtlas] Ready for: normalizeCounts(), plotPCA(), runDE()")
+  message("[OrnTx] Import complete!")
+  message("[OrnTx] Species:  ", species)
+  message("[OrnTx] Genes:    ", nrow(se))
+  message("[OrnTx] Samples:  ", ncol(se))
+  message("[OrnTx] Ready for: normalizeCounts(), plotPCA(), runDE()")
   se
 }
 

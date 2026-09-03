@@ -2,7 +2,7 @@
 % Please edit documentation in R/import_custom.R
 \name{importCustomAtlas}
 \alias{importCustomAtlas}
-\title{Import RNA-seq data from any plant species into OrnAtlas}
+\title{Import RNA-seq data from any plant species into OrnTx}
 \usage{
 importCustomAtlas(
   counts_dir,

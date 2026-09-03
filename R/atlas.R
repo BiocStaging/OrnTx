@@ -10,7 +10,7 @@ utils::globalVariables(c("gene", "stage", "expression"))
 #' @export
 #'
 #' @examples
-#' library(OrnAtlas)
+#' library(OrnTx)
 #' data(rosa_example)
 #' se_norm <- normalizeCounts(rosa_example, method = "CPM")
 buildAtlas <- function(se,

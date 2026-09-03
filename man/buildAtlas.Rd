@@ -20,7 +20,7 @@ A SummarizedExperiment with atlas slot
 Build an expression atlas from count data
 }
 \examples{
-library(OrnAtlas)
+library(OrnTx)
 data(rosa_example)
 se_norm <- normalizeCounts(rosa_example, method = "CPM")
 }

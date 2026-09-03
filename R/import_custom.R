@@ -1,4 +1,4 @@
-#' Import RNA-seq data from any plant species into OrnAtlas
+#' Import RNA-seq data from any plant species into OrnTx
 #'
 #' @description
 #' A universal import function that accepts STAR ReadsPerGene.out.tab
@@ -98,11 +98,11 @@ importCustomAtlas <- function(counts_dir,
 
   strandedness <- match.arg(strandedness)
 
-  message("[OrnAtlas] Importing data for: ", species)
-  message("[OrnAtlas] Strandedness: ", strandedness)
+  message("[OrnTx] Importing data for: ", species)
+  message("[OrnTx] Strandedness: ", strandedness)
 
   # -- Step 1: Read metadata ----------------------------------------------
-  message("[OrnAtlas] Reading metadata from: ",
+  message("[OrnTx] Reading metadata from: ",
           basename(metadata_file))
 
   if (!file.exists(metadata_file))
@@ -116,7 +116,7 @@ importCustomAtlas <- function(counts_dir,
                             quote            = "\"",
                             fill             = TRUE)
 
-  message("[OrnAtlas] Metadata: ", nrow(meta), " rows x ",
+  message("[OrnTx] Metadata: ", nrow(meta), " rows x ",
           ncol(meta), " columns")
 
   # Auto-detect sample ID column
@@ -125,14 +125,14 @@ importCustomAtlas <- function(counts_dir,
                         "SRR", "sample", "ID", "id", "name")
     found <- candidate_cols[candidate_cols %in% names(meta)]
     if (length(found) == 0) {
-      message("[OrnAtlas] Could not auto-detect sample ID column.")
-      message("[OrnAtlas] Available columns: ",
+      message("[OrnTx] Could not auto-detect sample ID column.")
+      message("[OrnTx] Available columns: ",
               paste(names(meta)[seq_len(min(10, ncol(meta)))], collapse = ", "))
       stop("Please specify 'sample_col' argument with the column ",
            "name containing sample IDs.")
     }
     sample_col <- found[1]
-    message("[OrnAtlas] Auto-detected sample ID column: '",
+    message("[OrnTx] Auto-detected sample ID column: '",
             sample_col, "'")
   }
 
@@ -143,7 +143,7 @@ importCustomAtlas <- function(counts_dir,
   rownames(meta) <- make.unique(as.character(meta[[sample_col]]))
 
   # -- Step 2: Find count files -------------------------------------------
-  message("[OrnAtlas] Scanning: ", counts_dir)
+  message("[OrnTx] Scanning: ", counts_dir)
 
   if (!dir.exists(counts_dir))
     stop("counts_dir not found: ", counts_dir)
@@ -164,29 +164,29 @@ importCustomAtlas <- function(counts_dir,
                      sample_ids)
   names(count_files) <- sample_ids
 
-  message("[OrnAtlas] Found ", length(count_files), " count files")
+  message("[OrnTx] Found ", length(count_files), " count files")
 
   # -- Step 3: Match samples with metadata -------------------------------
   common <- intersect(sample_ids, rownames(meta))
 
   if (length(common) == 0) {
-    message("[OrnAtlas] ERROR: No overlap between count files and metadata!")
-    message("[OrnAtlas] Count file IDs (first 5): ",
+    message("[OrnTx] ERROR: No overlap between count files and metadata!")
+    message("[OrnTx] Count file IDs (first 5): ",
             paste(sample_ids[seq_len(min(5, length(sample_ids)))], collapse = ", "))
-    message("[OrnAtlas] Metadata IDs (first 5): ",
+    message("[OrnTx] Metadata IDs (first 5): ",
             paste(rownames(meta)[seq_len(min(5, nrow(meta)))], collapse = ", "))
     stop("Sample IDs in count files don't match metadata. ",
          "Check the 'sample_col' argument.")
   }
 
   if (length(common) < length(sample_ids)) {
-    message("[OrnAtlas] Note: ", length(sample_ids) - length(common),
+    message("[OrnTx] Note: ", length(sample_ids) - length(common),
             " count files have no matching metadata - skipping those.")
   }
 
   count_files <- count_files[common]
   meta_final  <- meta[common, , drop = FALSE]
-  message("[OrnAtlas] Matched samples: ", length(common))
+  message("[OrnTx] Matched samples: ", length(common))
 
   # -- Step 4: Choose strand column --------------------------------------
   col_idx <- switch(strandedness,
@@ -196,7 +196,7 @@ importCustomAtlas <- function(counts_dir,
   )
 
   # -- Step 5: Read count files -------------------------------------------
-  message("[OrnAtlas] Reading ", length(count_files),
+  message("[OrnTx] Reading ", length(count_files),
           " count files...")
 
   count_list <- lapply(seq_along(count_files), function(i) {
@@ -225,7 +225,7 @@ importCustomAtlas <- function(counts_dir,
   # Remove failed files
   failed <- vapply(count_list, is.null, logical(1))
   if (any(failed)) {
-    message("[OrnAtlas] Warning: ", sum(failed),
+    message("[OrnTx] Warning: ", sum(failed),
             " files failed to read and were excluded.")
     count_list  <- count_list[!failed]
     meta_final  <- meta_final[names(count_list), , drop = FALSE]
@@ -235,9 +235,9 @@ importCustomAtlas <- function(counts_dir,
     stop("No count files could be read successfully.")
 
   # -- Step 6: Build count matrix -----------------------------------------
-  message("[OrnAtlas] Building count matrix...")
+  message("[OrnTx] Building count matrix...")
   common_genes <- Reduce(intersect, lapply(count_list, names))
-  message("[OrnAtlas] Common genes across all samples: ",
+  message("[OrnTx] Common genes across all samples: ",
           length(common_genes))
 
   if (length(common_genes) == 0)
@@ -252,7 +252,7 @@ importCustomAtlas <- function(counts_dir,
   # -- Step 7: Filter lowly expressed genes ------------------------------
   keep      <- rowSums(count_mat >= min_count) >= min_samples
   count_mat <- count_mat[keep, , drop = FALSE]
-  message("[OrnAtlas] Genes after filtering (>= ", min_count,
+  message("[OrnTx] Genes after filtering (>= ", min_count,
           " counts in >= ", min_samples, " samples): ",
           nrow(count_mat))
 
@@ -261,7 +261,7 @@ importCustomAtlas <- function(counts_dir,
   rownames(row_data) <- rownames(count_mat)
 
   if (!is.null(annotation_file)) {
-    message("[OrnAtlas] Parsing gene annotation from: ",
+    message("[OrnTx] Parsing gene annotation from: ",
             basename(annotation_file))
     ann <- tryCatch(
       .parseGTFAnnotation(annotation_file,
@@ -274,7 +274,7 @@ importCustomAtlas <- function(counts_dir,
     )
     if (!is.null(ann)) {
       row_data <- S4Vectors::DataFrame(ann)
-      message("[OrnAtlas] Annotated ", sum(!is.na(ann$gene_name)),
+      message("[OrnTx] Annotated ", sum(!is.na(ann$gene_name)),
               " genes with names")
     }
   }
@@ -290,15 +290,15 @@ importCustomAtlas <- function(counts_dir,
       n_samples    = ncol(count_mat),
       n_genes      = nrow(count_mat),
       import_date  = Sys.Date(),
-      ornAtlas_version = utils::packageVersion("OrnAtlas")
+      ornAtlas_version = utils::packageVersion("OrnTx")
     )
   )
 
-  message("[OrnAtlas] OK Import complete!")
-  message("[OrnAtlas] Species:  ", species)
-  message("[OrnAtlas] Genes:    ", nrow(se))
-  message("[OrnAtlas] Samples:  ", ncol(se))
-  message("[OrnAtlas] Ready for: normalizeCounts(), plotPCA(), runDE()")
+  message("[OrnTx] OK Import complete!")
+  message("[OrnTx] Species:  ", species)
+  message("[OrnTx] Genes:    ", nrow(se))
+  message("[OrnTx] Samples:  ", ncol(se))
+  message("[OrnTx] Ready for: normalizeCounts(), plotPCA(), runDE()")
   se
 }
 
@@ -312,7 +312,7 @@ importCustomAtlas <- function(counts_dir,
     stop("GTF file not found: ", gtf_file)
 
   # Read GTF - only gene lines for speed
-  message("[OrnAtlas] Reading GTF (this may take a moment)...")
+  message("[OrnTx] Reading GTF (this may take a moment)...")
   gtf <- utils::read.table(gtf_file,
                            header           = FALSE,
                            sep              = "\t",
@@ -325,7 +325,7 @@ importCustomAtlas <- function(counts_dir,
   if (nrow(gene_lines) == 0)
     gene_lines <- gtf  # fallback if no 'gene' lines
 
-  message("[OrnAtlas] Parsing ", nrow(gene_lines), " gene records...")
+  message("[OrnTx] Parsing ", nrow(gene_lines), " gene records...")
 
   # Extract gene_id and gene_name from attributes column
   attrs      <- gene_lines[, 9]

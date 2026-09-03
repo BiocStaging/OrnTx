@@ -1,5 +1,5 @@
 ---
-title: "OrnAtlas: Expression Atlas for Ornamental Plants"
+title: "OrnTx: Expression Atlas for Ornamental Plants"
 author: "Lashika Meena"
 date: "`r Sys.Date()`"
 output:
@@ -10,7 +10,7 @@ output:
     fig_width: 8
     fig_height: 6
 vignette: >
-  %\VignetteIndexEntry{OrnAtlas: Expression Atlas for Ornamental Plants}
+  %\VignetteIndexEntry{OrnTx: Expression Atlas for Ornamental Plants}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -22,12 +22,12 @@ knitr::opts_chunk$set(
   warning = FALSE,
   fig.align = "center"
 )
-library(OrnAtlas)
+library(OrnTx)
 ```
 
 # Introduction
 
-**OrnAtlas** is the first R/Bioconductor package providing an integrated
+**OrnTx** is the first R/Bioconductor package providing an integrated
 multi-study expression atlas and analysis toolkit specifically designed for
 ornamental and floricultural plant species.
 
@@ -52,7 +52,7 @@ Currently supported species:
 ```{r install, eval=FALSE}
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
-BiocManager::install("OrnAtlas")
+BiocManager::install("OrnTx")
 ```
 
 # Quick Start — Rosa chinensis
@@ -63,7 +63,7 @@ The `importCustomAtlas()` function is the universal entry point.
 It accepts STAR `ReadsPerGene.out.tab` files from any plant species:
 
 ```{r import, eval=FALSE}
-library(OrnAtlas)
+library(OrnTx)
 
 # Import Rosa chinensis expression data
 se <- importCustomAtlas(
@@ -80,8 +80,8 @@ For demonstration, we use the built-in example dataset:
 
 ```{r example-data}
 # Load built-in example data
-example_files <- system.file("extdata", package = "OrnAtlas")
-cat("OrnAtlas installed at:", example_files, "\n")
+example_files <- system.file("extdata", package = "OrnTx")
+cat("OrnTx installed at:", example_files, "\n")
 
 # Show built-in annotation
 ann <- getRosaAnnotation()
@@ -154,7 +154,7 @@ plotVolcano(results,
             top_n = 20)
 ```
 
-lines <- readLines("vignettes/OrnAtlas_workflow.Rmd")
+lines <- readLines("vignettes/OrnTx_workflow.Rmd")
 
 # Find line number of section 7
 ## Annotate DE results
@@ -173,13 +173,13 @@ head(top_genes[, c("gene_id", "locus_name",
 
 # Universal Import — Any Plant Species
 
-The key innovation of OrnAtlas is `importCustomAtlas()` which works
+The key innovation of OrnTx is `importCustomAtlas()` which works
 for **any plant species** with STAR-aligned RNA-seq data.
 
 
 ## Trait gene analysis
 
-OrnAtlas includes a curated database of 64 floriculture trait genes
+OrnTx includes a curated database of 64 floriculture trait genes
 anchored to Arabidopsis thaliana orthologs, enabling cross-species
 trait queries regardless of genome annotation quality.
 
@@ -249,7 +249,7 @@ plotVolcano(results_mg,
 
 ## Required input format
 
-OrnAtlas accepts output from the STAR aligner with
+OrnTx accepts output from the STAR aligner with
 `--quantMode GeneCounts`. Each sample generates a
 `ReadsPerGene.out.tab` file:
 
@@ -275,7 +275,7 @@ SRR003,Rosa chinensis,leaf,mature,Old_Blush,1
 
 # Rosa chinensis Gene Annotation
 
-OrnAtlas includes a built-in annotation database for all 51,302
+OrnTx includes a built-in annotation database for all 51,302
 genes in the RchiOBHm-V2 reference genome:
 
 ```{r annotation}

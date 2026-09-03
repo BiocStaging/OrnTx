@@ -13,7 +13,7 @@ A data frame with 4 rows and 3 variables:
 }
 \source{
 Differential expression analysis of NCBI BioProject
-PRJNA562616 using OrnAtlas runDE().
+PRJNA562616 using OrnTx runDE().
 }
 \usage{
 data(marigold_carotenoid_genes)
