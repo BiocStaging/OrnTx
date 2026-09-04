@@ -1,6 +1,6 @@
 Package: OrnTx
 Title: Expression Atlas for Ornamental Plant Transcriptomics
-Version: 0.1.0
+Version: 0.99.0
 Authors@R: c(
     person("Lashika", "Meena",
            email = "lashikakarnal@gmail.com",
