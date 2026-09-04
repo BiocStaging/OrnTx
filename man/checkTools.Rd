@@ -12,6 +12,3 @@ Named logical vector of tool availability.
 \description{
 Checks fastp, STAR, fasterq-dump availability.
 }
-\examples{
-checkTools()
-}

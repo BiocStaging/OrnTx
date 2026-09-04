@@ -19,6 +19,8 @@ are in NCBI LOC format (e.g., LOC112190511). This complements
 annotateGenes() which works with RchiOBHm locus names.
 }
 \examples{
+data(rose_ncbi_annotation)
+head(rose_ncbi_annotation)
 \donttest{
 data(rosa_ncbi_annotation)
 de <- data.frame(gene_id = rose_ncbi_annotation$ncbi_gene_id[1:5],

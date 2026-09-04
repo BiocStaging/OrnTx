@@ -38,6 +38,7 @@ and generates ReadsPerGene.out.tab count files compatible with
 importCustomAtlas(). Requires STAR to be installed.
 }
 \examples{
+checkTools()
 \dontrun{
 alignReads(
   fastq_dir  = "clean_reads/",

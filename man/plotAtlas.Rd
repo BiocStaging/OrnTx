@@ -20,6 +20,11 @@ A ggplot2 heatmap object
 Plot expression atlas heatmap
 }
 \examples{
+data(rosa_example)
+se_norm <- normalizeCounts(rosa_example, method = 'CPM')
+atlas <- buildAtlas(se_norm, group_var = 'tissue_simple',
+                    assay_name = 'CPM')
+plotAtlas(atlas, top_n = 30, title = 'Rosa chinensis Atlas')
 \donttest{
 data(rosa_example)
 se_norm <- normalizeCounts(rosa_example, method = "CPM")

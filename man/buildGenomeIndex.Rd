@@ -34,6 +34,7 @@ Builds a STAR genome index from FASTA and GTF.
 Required once per genome. Requires STAR to be installed.
 }
 \examples{
+checkTools()
 \dontrun{
 buildGenomeIndex(
   genome_fasta = "rosa_genome.fna",

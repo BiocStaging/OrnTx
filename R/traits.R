@@ -67,6 +67,9 @@ findOrthologs <- function(gene_ids, id_type=c("symbol","arabidopsis"),
 #' @export
 #' @name annotateWithTraits
 #' @examples
+#' # Get trait genes
+#' color_genes <- getFlowerGenes(trait = 'flower_color')
+#' head(color_genes[, c('gene_symbol', 'pathway')])
 #' \donttest{
 #' data(rosa_example)
 #' res <- runDE(rosa_example, design=~tissue_simple,

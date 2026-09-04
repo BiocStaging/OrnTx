@@ -103,6 +103,10 @@ plotPCA <- function(se,
 #'
 #' @param base_size Base font size
 #' @return A ggplot2 theme
+#' @examples
+#' p <- ggplot2::ggplot(data.frame(x=1:5, y=1:5),
+#'        ggplot2::aes(x, y)) + ornTheme()
+#' print(p)
 #' @export
 ornTheme <- function(base_size = 12) {
   ggplot2::theme_classic(base_size = base_size) +

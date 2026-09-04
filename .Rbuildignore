@@ -1,3 +1,11 @@
 ^OrnAtlas\.Rproj$
 ^\.Rproj\.user$
 ^OrnAtlas\.BiocCheck$
+^OrnTx\.BiocCheck$
+^OrnTx\.Rproj$
+^aligned$
+^raw_reads$
+^clean_reads$
+^aligned$
+^clean_reads$
+^raw_reads$

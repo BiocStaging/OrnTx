@@ -10,6 +10,8 @@
 #' @export
 #'
 #' @examples
+#' ann <- getRosaAnnotation()
+#' head(ann)
 #' \dontrun{
 #' files <- c(Sample1 = "path/to/sample1/ReadsPerGene.out.tab")
 #' importRosaCounts(files, col_data = metadata)

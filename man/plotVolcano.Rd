@@ -30,6 +30,10 @@ A ggplot2 volcano plot
 Volcano plot of DE results
 }
 \examples{
+data(rosa_example)
+results <- runDE(rosa_example, design = ~ tissue_simple,
+  contrast = c('tissue_simple', 'petal', 'abscission zone'))
+plotVolcano(results, title = 'Petal vs AZ')
 \donttest{
 data(rosa_example)
 results <- runDE(rosa_example,

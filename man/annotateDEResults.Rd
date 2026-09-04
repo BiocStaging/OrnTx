@@ -20,6 +20,7 @@ Convenience wrapper that adds locus names to a complete DE
 results data.frame from \code{runDE()}.
 }
 \examples{
+ann <- annotateGenes(c("gene10715", "gene21520"))
 \donttest{
 data(rosa_example)
 results <- runDE(rosa_example,

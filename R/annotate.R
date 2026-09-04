@@ -73,6 +73,7 @@ annotateGenes <- function(gene_ids,
 #' @export
 #'
 #' @examples
+#' ann <- annotateGenes(c("gene10715", "gene21520"))
 #' \donttest{
 #' data(rosa_example)
 #' results <- runDE(rosa_example,
@@ -131,6 +132,8 @@ getRosaAnnotation <- function() {
 #' @name annotateWithNCBI
 #'
 #' @examples
+#' data(rose_ncbi_annotation)
+#' head(rose_ncbi_annotation)
 #' \donttest{
 #' data(rosa_ncbi_annotation)
 #' de <- data.frame(gene_id = rose_ncbi_annotation$ncbi_gene_id[1:5],

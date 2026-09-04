@@ -4,7 +4,6 @@
 #' @export
 #' @name checkTools
 #' @examples
-#' checkTools()
 checkTools <- function() {
   tools <- c("fastp", "STAR", "fasterq-dump", "featureCounts")
   available <- vapply(tools, function(t) {
@@ -38,6 +37,7 @@ checkTools <- function() {
 #' @export
 #' @name downloadSRA
 #' @examples
+#' checkTools()
 #' \dontrun{
 #' downloadSRA(
 #'   accessions = c("SRR10160942", "SRR10160944"),
@@ -109,6 +109,7 @@ downloadSRA <- function(accessions, output_dir="raw_reads",
 #' @export
 #' @name runQC
 #' @examples
+#' checkTools()
 #' \dontrun{
 #' runQC(input_dir="raw_reads/", output_dir="clean_reads/")
 #' }
@@ -180,6 +181,7 @@ runQC <- function(input_dir, output_dir="clean_reads",
 #' @export
 #' @name buildGenomeIndex
 #' @examples
+#' checkTools()
 #' \dontrun{
 #' buildGenomeIndex(
 #'   genome_fasta = "rosa_genome.fna",
@@ -232,6 +234,7 @@ buildGenomeIndex <- function(genome_fasta, gtf_file,
 #' @export
 #' @name alignReads
 #' @examples
+#' checkTools()
 #' \dontrun{
 #' alignReads(
 #'   fastq_dir  = "clean_reads/",
@@ -315,6 +318,7 @@ alignReads <- function(fastq_dir, index_dir,
 #' @export
 #' @name runFullPipeline
 #' @examples
+#' checkTools()
 #' \dontrun{
 #' se <- runFullPipeline(
 #'   fastq_dir     = "raw_reads/",

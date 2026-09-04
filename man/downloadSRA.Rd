@@ -31,6 +31,7 @@ Downloads SRA files and converts to FASTQ using
 fasterq-dump or direct AWS S3 download.
 }
 \examples{
+checkTools()
 \dontrun{
 downloadSRA(
   accessions = c("SRR10160942", "SRR10160944"),

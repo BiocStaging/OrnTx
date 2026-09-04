@@ -51,6 +51,7 @@ For SRA download first, use downloadSRA() separately.
 Requires fastp and STAR installed (Linux/macOS/HPC only).
 }
 \examples{
+checkTools()
 \dontrun{
 se <- runFullPipeline(
   fastq_dir     = "raw_reads/",

@@ -15,3 +15,8 @@ A ggplot2 theme
 \description{
 OrnTx ggplot2 theme
 }
+\examples{
+p <- ggplot2::ggplot(data.frame(x=1:5, y=1:5),
+       ggplot2::aes(x, y)) + ornTheme()
+print(p)
+}

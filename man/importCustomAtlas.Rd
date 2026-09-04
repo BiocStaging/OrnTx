@@ -78,6 +78,9 @@ Recommended metadata columns for ornamental plant studies:
 }
 }
 \examples{
+# Check available tools
+ann <- getRosaAnnotation()
+nrow(ann)
 \dontrun{
 # Example 1: Chrysanthemum morifolium
 se <- importCustomAtlas(

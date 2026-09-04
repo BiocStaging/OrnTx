@@ -34,6 +34,7 @@ Runs fastp QC on FASTQ files. Supports paired and
 single-end data. Requires fastp to be installed.
 }
 \examples{
+checkTools()
 \dontrun{
 runQC(input_dir="raw_reads/", output_dir="clean_reads/")
 }

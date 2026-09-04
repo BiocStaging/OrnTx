@@ -27,6 +27,8 @@ A SummarizedExperiment object
 Build Rosa chinensis Expression Atlas
 }
 \examples{
+ann <- getRosaAnnotation()
+nrow(ann)
 \dontrun{
 se <- buildRosaAtlas(
   counts_dir    = "path/to/counts",

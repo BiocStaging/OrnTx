@@ -11,6 +11,8 @@ utils::globalVariables(c("tissue_clean"))
 #' @export
 #'
 #' @examples
+#' ann <- getRosaAnnotation()
+#' nrow(ann)
 #' \dontrun{
 #' se <- buildRosaAtlas(
 #'   counts_dir    = "path/to/counts",
