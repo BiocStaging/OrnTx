@@ -9,3 +9,4 @@
 ^aligned$
 ^clean_reads$
 ^raw_reads$
+^\.git$
