@@ -4,6 +4,7 @@
 #' @export
 #' @name checkTools
 #' @examples
+#' checkTools()
 checkTools <- function() {
   tools <- c("fastp", "STAR", "fasterq-dump", "featureCounts")
   available <- vapply(tools, function(t) {

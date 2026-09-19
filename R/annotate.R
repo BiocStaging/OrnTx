@@ -33,23 +33,54 @@ annotateGenes <- function(gene_ids,
                       gene_biotype = NA_character_))
   }
 
-  # Load built-in annotation
+  # Auto-detect gene ID format
+  id_type <- dplyr::case_when(
+    all(grepl("^gene[0-9]+$", gene_ids))     ~ "star",
+    all(grepl("^RchiOBHm_", gene_ids))       ~ "locus",
+    all(grepl("^LOC[0-9]+$", gene_ids))      ~ "ncbi",
+    TRUE                                      ~ "unknown"
+  )
+  message("[OrnTx] Detected gene ID format: ", id_type)
+
+  # Load annotation
   ann_env <- new.env()
-  utils::data("rosa_annotation", package = "OrnTx",
-       envir = ann_env)
+  utils::data("rosa_annotation", package = "OrnTx", envir = ann_env)
   ann <- ann_env$rosa_annotation
 
-  # Merge
-  merged <- merge(
-    data.frame(gene_id = gene_ids, stringsAsFactors = FALSE),
-    ann,
-    by     = "gene_id",
-    all.x  = TRUE,
-    sort   = FALSE
-  )
+  if (id_type == "star") {
+    # gene0, gene1 format - direct match
+    merged <- merge(
+      data.frame(gene_id = gene_ids, stringsAsFactors = FALSE),
+      ann, by = "gene_id", all.x = TRUE, sort = FALSE)
 
-  # Preserve input order
-  merged <- merged[match(gene_ids, merged$gene_id), ]
+  } else if (id_type == "locus") {
+    # RchiOBHm format - match by locus_name
+    merged <- merge(
+      data.frame(locus_name = gene_ids, stringsAsFactors = FALSE),
+      ann, by = "locus_name", all.x = TRUE, sort = FALSE)
+    merged$gene_id <- merged$locus_name
+
+  } else if (id_type == "ncbi") {
+    # LOC format - use NCBI annotation
+    utils::data("rose_ncbi_annotation", package = "OrnTx",
+                envir = ann_env)
+    ncbi_ann <- ann_env$rose_ncbi_annotation
+    merged <- merge(
+      data.frame(ncbi_gene_id = gene_ids, stringsAsFactors = FALSE),
+      ncbi_ann, by = "ncbi_gene_id", all.x = TRUE, sort = FALSE)
+    merged$gene_id   <- merged$ncbi_gene_id
+    merged$locus_name <- merged$product
+    merged$gene_biotype <- NA_character_
+
+  } else {
+    message("[OrnTx] Unknown gene ID format. Returning gene_ids only.")
+    return(data.frame(gene_id      = gene_ids,
+                      locus_name   = NA_character_,
+                      gene_biotype = NA_character_))
+  }
+
+  merged <- merged[match(gene_ids,
+                         merged$gene_id), ]
   rownames(merged) <- NULL
 
   n_annotated <- sum(!is.na(merged$locus_name))
@@ -57,31 +88,6 @@ annotateGenes <- function(gene_ids,
           length(gene_ids), " genes")
   merged
 }
-
-
-#' Annotate DE results with Rosa chinensis gene information
-#'
-#' @description
-#' Convenience wrapper that adds locus names to a complete DE
-#' results data.frame from \code{runDE()}.
-#'
-#' @param de_results A data.frame from \code{runDE()}.
-#' @param species Character. Currently "Rosa chinensis".
-#'
-#' @return The input data.frame with additional columns:
-#'   \code{locus_name} and \code{gene_biotype}.
-#' @export
-#'
-#' @examples
-#' ann <- annotateGenes(c("gene10715", "gene21520"))
-#' \donttest{
-#' data(rosa_example)
-#' results <- runDE(rosa_example,
-#'   design   = ~ tissue_simple,
-#'   contrast = c("tissue_simple", "petal", "abscission zone"))
-#' results_ann <- annotateDEResults(results)
-#' head(results_ann[results_ann$significant == TRUE, ])
-#' }
 annotateDEResults <- function(de_results,
                               species = "Rosa chinensis") {
 
