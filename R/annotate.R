@@ -88,6 +88,18 @@ annotateGenes <- function(gene_ids,
           length(gene_ids), " genes")
   merged
 }
+#' @title Annotate DE results
+#' @description Adds locus names to DE results from runDE().
+#' @param de_results data.frame from runDE() with a gene_id column.
+#' @param species Character. Default "Rosa chinensis".
+#' @return data.frame with locus_name and gene_biotype columns added.
+#' @export
+#' #' @examples
+#' data("rosa_example", package = "OrnTx")
+#' de <- runDE(rosa_example,
+#'             design   = ~ tissue_simple,
+#'             contrast = c("tissue_simple", "petal", "abscission zone"))
+#' head(annotateDEResults(de))
 annotateDEResults <- function(de_results,
                               species = "Rosa chinensis") {
 

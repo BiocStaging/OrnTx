@@ -29,14 +29,14 @@ Identifies known floriculture trait genes in
 differential expression results.
 }
 \examples{
-# Get trait genes
 color_genes <- getFlowerGenes(trait = 'flower_color')
 head(color_genes[, c('gene_symbol', 'pathway')])
 \donttest{
-data(rosa_example)
-res <- runDE(rosa_example, design=~tissue_simple,
-  contrast=c("tissue_simple","petal","abscission zone"))
-res_ann <- annotateDEResults(res)
-annotateWithTraits(res_ann)
+  de <- data.frame(
+    gene_id        = c('CHS', 'CHI', 'F3H', 'gene001'),
+    log2FoldChange = c(2.1, 1.8, 1.5, -0.3),
+    significant    = c(TRUE, TRUE, TRUE, FALSE)
+  )
+  annotateWithTraits(de, trait = 'flower_color', gene_col = 'gene_id')
 }
 }
