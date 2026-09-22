@@ -94,7 +94,7 @@ annotateGenes <- function(gene_ids,
 #' @param species Character. Default "Rosa chinensis".
 #' @return data.frame with locus_name and gene_biotype columns added.
 #' @export
-#' #' @examples
+#' @examples
 #' data("rosa_example", package = "OrnTx")
 #' de <- runDE(rosa_example,
 #'             design   = ~ tissue_simple,

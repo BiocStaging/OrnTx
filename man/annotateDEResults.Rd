@@ -17,3 +17,10 @@ data.frame with locus_name and gene_biotype columns added.
 \description{
 Adds locus names to DE results from runDE().
 }
+\examples{
+data("rosa_example", package = "OrnTx")
+de <- runDE(rosa_example,
+            design   = ~ tissue_simple,
+            contrast = c("tissue_simple", "petal", "abscission zone"))
+head(annotateDEResults(de))
+}

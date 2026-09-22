@@ -91,18 +91,17 @@ head(ann)
 
 ## Normalize expression data
 
-```{r normalize, eval=FALSE}
-# CPM normalization (fast, good for visualization)
+```{r normalize, eval=TRUE}
+data("rosa_example", package = "OrnTx")
+se <- rosa_example
+# CPM normalization
 se_norm <- normalizeCounts(se, method = "CPM")
-
-# DESeq2 VST normalization (best for DE analysis)
-se_vst <- normalizeCounts(se, method = "DESeq2_vst",
-                           design = ~ tissue_simple)
+se_norm
 ```
 
 ## PCA visualization
 
-```{r pca, eval=FALSE}
+```{r pca, eval=TRUE}
 # PCA of all 270 samples colored by tissue type
 p <- plotPCA(se_norm,
              assay_name   = "CPM",
@@ -120,7 +119,7 @@ The PCA reveals distinct tissue-specific transcriptional programs:
 
 ## Build expression atlas
 
-```{r atlas, eval=FALSE}
+```{r atlas, eval=TRUE}
 # Aggregate replicates into condition-level atlas
 atlas <- buildAtlas(se_norm,
                     group_var  = "tissue_simple",
@@ -134,7 +133,7 @@ plotAtlas(atlas,
 
 ## Differential expression analysis
 
-```{r de, eval=FALSE}
+```{r de, eval=TRUE}
 # DE analysis: petal vs abscission zone
 results <- runDE(
   se,
@@ -159,11 +158,13 @@ lines <- readLines("vignettes/OrnTx_workflow.Rmd")
 # Find line number of section 7
 ## Annotate DE results
 
-```{r annotate, eval=FALSE}
-# Add official locus names to DE results
-results_ann <- annotateDEResults(results)
-
-# View top significant genes with annotation
+```{r annotate, eval=TRUE}
+library(OrnTx)
+data("rosa_example", package = "OrnTx")
+results <- runDE(rosa_example,
+                 design   = ~ tissue_simple,
+                 contrast = c("tissue_simple", "petal", "abscission zone"))
+results_ann <- OrnTx::annotateDEResults(results)
 top_genes <- results_ann[results_ann$significant == TRUE, ]
 top_genes <- top_genes[order(top_genes$padj), ]
 head(top_genes[, c("gene_id", "locus_name",
@@ -183,7 +184,7 @@ OrnTx includes a curated database of 64 floriculture trait genes
 anchored to Arabidopsis thaliana orthologs, enabling cross-species
 trait queries regardless of genome annotation quality.
 
-```{r trait-genes, eval=FALSE}
+```{r trait-genes, eval=TRUE}
 # Get all flower color genes
 color_genes <- getFlowerGenes(trait = 'flower_color')
 nrow(color_genes)
