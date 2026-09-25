@@ -153,10 +153,8 @@ plotVolcano(results,
             top_n = 20)
 ```
 
-lines <- readLines("vignettes/OrnTx_workflow.Rmd")
 
-# Find line number of section 7
-## Annotate DE results
+## Trait Annotation
 
 ```{r annotate, eval=TRUE}
 library(OrnTx)
@@ -164,12 +162,11 @@ data("rosa_example", package = "OrnTx")
 results <- runDE(rosa_example,
                  design   = ~ tissue_simple,
                  contrast = c("tissue_simple", "petal", "abscission zone"))
-results_ann <- OrnTx::annotateDEResults(results)
+results_ann <- annotateWithTraits(results, trait = "all")
+# Show top significant DE genes
 top_genes <- results_ann[results_ann$significant == TRUE, ]
 top_genes <- top_genes[order(top_genes$padj), ]
-head(top_genes[, c("gene_id", "locus_name",
-                    "log2FoldChange", "padj",
-                    "direction")], 10)
+head(top_genes[, c("gene_id", "log2FoldChange", "padj", "direction")], 10)
 ```
 
 # Universal Import — Any Plant Species
