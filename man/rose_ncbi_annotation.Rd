@@ -25,3 +25,9 @@ from the genomic GTF file. Gene IDs use NCBI LOC format
 (e.g., LOC112190511).
 }
 \keyword{datasets}
+\value{
+  A \code{data.frame} with NCBI-sourced gene annotation for
+  \emph{Rosa chinensis}, including RefSeq IDs and functional descriptions.
+}
+NA
+\keyword{datasets}

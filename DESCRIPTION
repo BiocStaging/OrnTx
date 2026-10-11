@@ -5,17 +5,14 @@ Authors@R: c(
     person("Lashika", "Meena",
            email = "lashikakarnal@gmail.com",
            role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0000-0000-0000")))
-Author: Lashika Meena [aut, cre]
-Maintainer: Lashika Meena <lashikakarnal@gmail.com>
+           comment = c(ORCID = "0009-0003-0770-0261")))
 Description: The first R/Bioconductor package for ornamental plant
     transcriptomics. Provides a complete RNA-seq pipeline (download,
-    QC, alignment, import), a curated 270-sample Rosa chinensis
-    expression atlas, a 64-gene floriculture trait database anchored
-    to Arabidopsis orthologs, multi-tool import support (STAR,
-    featureCounts, HTSeq, Salmon), auto-detection of three Rosa
-    chinensis gene ID formats (STAR gene0, RchiOBHm locus names,
-    NCBI LOC IDs), and cross-species validation on Tagetes erecta.
+    QC, alignment, import), a curated Rosa chinensis expression atlas,
+    a 64-gene floriculture trait database anchored to Arabidopsis
+    orthologs, multi-tool import support (STAR, featureCounts, HTSeq,
+    Salmon), auto-detection of three Rosa chinensis gene ID formats,
+    and cross-species validation on Tagetes erecta.
 License: GPL-3
 URL: https://github.com/lashikakarnal/OrnTx
 BugReports: https://github.com/lashikakarnal/OrnTx/issues
@@ -23,7 +20,7 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Depends:
-    R (>= 4.3.0)
+    R (>= 4.4.0)
 Imports:
     SummarizedExperiment,
     S4Vectors,
@@ -42,5 +39,5 @@ Suggests:
     BiocStyle
 VignetteBuilder: knitr
 biocViews: RNASeq, GeneExpression, DifferentialExpression,
-    Transcriptomics, Visualization, DataImport, Annotation
-LazyData: true
+    Transcriptomics, Visualization, DataImport, Annotation, Alignment
+LazyData: false

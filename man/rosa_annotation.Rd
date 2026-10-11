@@ -26,3 +26,9 @@ names and gene biotype classifications.
 Hibrand Saint-Oyant L, et al. (2018) Nature Plants 4: 473-484.
 }
 \keyword{datasets}
+\value{
+  A \code{data.frame} with gene annotation data for \emph{Rosa chinensis},
+  including gene IDs, symbols, descriptions, and chromosomal coordinates.
+}
+NA
+\keyword{datasets}

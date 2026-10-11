@@ -25,3 +25,9 @@ differential expression analysis between orange (V-01) and
 yellow (V-01M) flower color genotypes.
 }
 \keyword{datasets}
+\value{
+  A \code{data.frame} containing carotenoid biosynthesis gene identifiers
+  and annotations for \emph{Tagetes erecta}.
+}
+NA
+\keyword{datasets}

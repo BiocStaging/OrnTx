@@ -22,3 +22,9 @@ for use in package examples and testing. Contains 500 highly
 variable genes across 6 samples: 3 petal and 3 abscission zone.
 }
 \keyword{datasets}
+\value{
+  A \code{\link[SummarizedExperiment]{SummarizedExperiment}} object with
+  6 RNA-seq samples (3 petal, 3 abscission zone) from \emph{Rosa chinensis}.
+}
+NA
+\keyword{datasets}

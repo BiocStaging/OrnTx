@@ -31,3 +31,9 @@ quality. Covers flower color, floral scent, senescence/vase life,
 floral development, and transcriptional regulation.
 }
 \keyword{datasets}
+\value{
+  A \code{data.frame} with 64 rows and columns including gene symbol,
+  trait category, Arabidopsis ortholog, and \emph{Rosa chinensis} gene ID.
+}
+NA
+\keyword{datasets}

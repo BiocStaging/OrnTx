@@ -28,6 +28,10 @@ arabidopsis_id columns for ortholog-based matching.}
 Identifies known floriculture trait genes in
 differential expression results.
 }
+\value{
+  A \code{data.frame} with the original columns plus additional trait
+  annotation columns merged from the floriculture trait database.
+}
 \examples{
 color_genes <- getFlowerGenes(trait = 'flower_color')
 head(color_genes[, c('gene_symbol', 'pathway')])
